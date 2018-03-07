@@ -5,7 +5,7 @@
 //Procedura merge scalania dwoch posortowanych list
 //merge dziala w czasie O(n) gdzie n=r-p+1 jest liczba scalonych elementow
 #include <iostream>
-#include <string>
+//#include <string>
 using namespace std;
 
 void print(int A[],int s){
@@ -28,7 +28,7 @@ void Merge(int A[],int p,int q,int r){
     for( j=0;j<s2;j++)
         R[j] = A[q + j+1];
     //print(R,s2);
-    i=0,j=0,k=p;
+    i=0,j=0;
     for(k=p;k<=r;k++){
         if(L[i]<=R[j]){
             A[k]=L[i];
@@ -126,18 +126,17 @@ Node *mergeTwoLists2(Node * &p,Node* &l1, Node* &l2) {
             p2 = p2->next;
         }
         p=p->next;
+
     }
 
     if(p1!=NULL){ //wersja bez wartownika, bo tutaj sie nie da
         p->next = p1;
     }
-
     if(p2!=NULL){
         p->next = p2;
     }
-
+    while(p->next!=NULL) p=p->next; //aby móc zwrócić koniec listy, bo jeżeli przepinamy końcówkę jednej listy to nie przechodzimy wskaźnikiem do końca
     return head->next;
-
 }
 
 
