@@ -213,21 +213,23 @@ int select1(int * A, int l, int r, int k) {
     if(l == r)
         return A[l];
     int q = Partition2(A, l, r);	// index podzialu
-    for(int i=0;i<10;i++)
-        cout<<A[i]<<" ";
-    cout<<endl;
+//    for(int i=0;i<10;i++)
+//        cout<<A[i]<<" ";
+//    cout<<endl;
     int tmp = q - l + 1;	// liczba elementow w lewej podtablicy
     if(k==tmp) return A[q];
     else if(k<tmp) return select1(A,l,q-1,k);
     else return select1(A,q+1,r,k-tmp);
 
 }
-//to jest źle, nie działa tak jak powinno, wprowadzić zmiany
+
 int SumBetween(int T[n], int from, int to,int n){
 
-    select1(T,from,to,n);
+    int k=select1(T,0,n-1,from);
+    int l=select1(T,0,n-1,to);
+    cout<<k<<" "<<l<<endl;
     int sum=0;
-    for(int i=from-1;i<to;i++)
+    for(int i=from;i<to;i++)
         sum+=T[i];
     return sum;
 
@@ -250,14 +252,18 @@ int main()
 //    print(list);
 //    QuickSort_list(list);
 //    print(list);
+  cout<<"Sortowanie tablicy QuickSort - stos"<<endl;
     int n=10;
   int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
     print_t(T,n);
     QuickSort_stos(T,0,n-1);
     print_t(T,n);
-//    int k=select1(T,0,9,7);
-//    cout<<k<<endl;
-//    cout<<SumBetween(T,3,7,9);
+    cout<<"Sortowanie tablicy select:"<<endl;
+    int T1[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
+    int k=select1(T1,0,n,2);
+    cout<<k<<endl;
+    cout<<"Sortowanie tablicy suma pomiędzy indeksami w tablicy"<<endl;
+    cout<<SumBetween(T1,0,3,10);
 
 
     return 0;
