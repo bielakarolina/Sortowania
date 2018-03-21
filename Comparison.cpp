@@ -56,7 +56,7 @@ void generate_data(int N){
     {
         for( int i = 1; i <= N; i++ )
         {
-            plik << rand() % 5000  + 1;
+            plik << rand() % 5000  + 1<<" ";
             plik.flush();
         }
         plik.close();
@@ -64,25 +64,19 @@ void generate_data(int N){
 
 }
 
-void open_file(){
+void data_to_table(int N,int *T){
     ifstream plik("dane.txt");
 
-    if(plik)
-    {
-        // Uda³o siê otworzyæ plik, a wiêc mo¿na rozpocz¹æ odczytywanie
 
-        string linia;     // Zmienna do przechowywania odczytanych wierszy tekstu
+    if(plik){
 
-        while(getline(plik, linia))    // Jeli jeszcze nie nast¹pi³ koniec pliku, czytamy dalej
-        {
+        for(int j = 0; j < N; j++)
+            plik >> T[j];
 
-            cout << linia << endl; // Wywietlamy odczytany tekst w konsoli
-            // Mo¿na te¿ zrobiæ z nim co innego
-        }
     }
     else
     {
-        cout << "B£¥D: nie mo¿na otworzyæ pliku do odczytu." << endl;
+        cout << "Chujowy masz plik Moja Droga." << endl;
     }
 
 }
@@ -91,12 +85,13 @@ int main()
 {
 
 
-
-    generate_data(1000);
-    open_file();
+    int N=1000; //rozmiar danych
+    generate_data(N);
+    int *T = new int [N];
+    data_to_table(N,T);
     cout<<"Sortowanie tablicy QuickSort"<<endl;
     int n=10;
-    int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
+   // int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
     print_t(T,n);
     QuickSort(T,0,n);
     print_t(T,n);
