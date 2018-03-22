@@ -1,24 +1,18 @@
-//
-// Created by root on 21.03.18.
-//
-
-
-#include <iostream>
-#include <stack>
-#include <fstream>
+#include<iostream>
+#include<fstream>
+#include <cstdlib>
+#include<time.h>
 using namespace std;
 
-const int n =10;
 
-
-
-int Partition2(int A[], int p, int r) // p - początek przedziału, r = koniec
+//QUICKSORT
+int Partition2(int A[], int p, int r) // p - pocz�tek przedzia�u, r = koniec
 {
     int x = A[r]; // x to ostatni element
-    int i = p - 1; // i ustawiamy przed przedziałem
+    int i = p - 1; // i ustawiamy przed przedzia�em
     int j;
     for (j = p; j < r; j++) {
-        if (A[j] <= x) // elementy mniejsze od x są przekładane na początek
+        if (A[j] <= x) // elementy mniejsze od x s� przek�adane na pocz�tek
         {
             i++;
             swap(A[i], A[j]);
@@ -28,20 +22,21 @@ int Partition2(int A[], int p, int r) // p - początek przedziału, r = koniec
     return i + 1;
 }
 
-
 void QuickSort(int t[], int p, int r)
 {
     if(p<r)
     {
         int q=Partition2(t,p,r);
-        QuickSort(t,p,q-1); // lub dla odpowiedniego partition QuickSort(t,p,q-1)
+        QuickSort(t,p,q-1);
         QuickSort(t,q+1,r);
     }
-
 }
-void Counting_Sort_R(int A[], int n, int exp) //k - zakres , exp - waga potegi ,zlożoność O(n+k+n+n)=O(k+n)
+
+
+//RADIX SORT
+void Counting_Sort_R(int A[], int n, int exp)
 {
-    int k=10;   //zakres liczb od 0 do k w tradycyjnej procedurze w radix jest to po prostu ilosc cyfr
+    int k=10;
     int B[n],C[k];
     int i;
     for(int i =0 ;i<k;i++)
@@ -59,9 +54,6 @@ void Counting_Sort_R(int A[], int n, int exp) //k - zakres , exp - waga potegi ,
         A[i] = B[i];
 }
 
-
-//podnosimy poprzeczke i sortujemy tablice liczb o dowolnym zakresie
-//sortujemy najpierw wedlug najwiekszej liczby czyli najdluzszej
 int max_number(int A[], int n)
 {
     int max = A[0];
@@ -71,19 +63,8 @@ int max_number(int A[], int n)
     return max;
 }
 
-long int potega(long int podstawa, int wykladnik)
-{
-    int wynik = 1;
-
-    for (int i = 0; i<wykladnik; i++)
-        wynik*=podstawa;
-
-    return wynik;
-}
-
-void RadixSort_C2(int A[],int p){  //  l*O(k+n)=O(l*(k+n)) po pierwsze tak jest w cormenie l-ilosc cyfr k-zakres n-rozmiar tablicy
-    int m=max_number(A,p);
-    //zakres w tym przypadku to najwieksza liczba
+void RadixSort_C2(int A[],int n){
+    int m=max_number(A,n);
     for (int i = 1; m/i>0; i*=10)
         Counting_Sort_R(A, n,i);
 }
@@ -96,7 +77,6 @@ void print_t(int A[],int s){
 }
 
 void generate_data(int N){
-    //N ilość danych ktore będziemy generować
 
     srand(time(0));
     fstream plik( "dane.txt", ios::out );
@@ -104,7 +84,7 @@ void generate_data(int N){
     {
         for( int i = 1; i <= N; i++ )
         {
-            plik << rand() % 5000  + 1<<" ";
+            plik << rand() % 10000000 + 1000000<<" ";
             plik.flush();
         }
         plik.close();
@@ -112,43 +92,64 @@ void generate_data(int N){
 
 }
 
-void data_to_table(int N,int *T, int *G){
+void data_to_table(int N,int *T){
     ifstream plik("dane.txt");
-
-
-    if(plik){
-
-        for(int j = 0; j < N; j++) {
+    if(plik)
+        for(int j = 0; j < N; j++)
             plik >> T[j];
-            plik >> G[j];
-        }
 
-    }
-    else
-    {
-        cout << "Chujowy masz plik Moja Droga." << endl;
-    }
 
+    else  cout << "Chujowy masz plik Moja Droga." << endl;
 }
+
+
+bool compare(double quick, double radix){
+    if(radix > quick) return true;
+    return false;
+}
+
+int iterations(int N){
+
+    time_t startQuick, koniecQuick, startRadix, koniecRadix;
+    double roznicaQuick = 0, roznicaRadix = 0;
+
+
+    while(!compare(roznicaQuick, roznicaRadix)){
+        cout<<"Hai";
+        generate_data(N);
+        int *T = new int [N];
+        int *G = new int [N];
+        data_to_table(N,T);
+        G = T;
+
+        time( & startQuick);
+        QuickSort(T,0,N);
+        time( & koniecQuick);
+
+        roznicaQuick = difftime(koniecQuick, startQuick);
+
+        time( & startRadix);
+        RadixSort_C2(G,N);
+        time( & koniecRadix);
+
+        roznicaRadix = difftime(koniecRadix, startRadix);
+
+        N+=1000;
+
+    }
+
+    return N;
+}
+
 
 int main()
 {
 
+    int N=1000;
 
-    int N=1000; //rozmiar danych
-    generate_data(N);
-    int *T = new int [N];
-    int *G = new int [N];
-    data_to_table(N,T,G);
-    cout<<"Sortowanie tablicy QuickSort"<<endl;
-    int n=10;
-   // int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
-    print_t(T,n);
-    QuickSort(T,0,n);
-    print_t(T,n);
+    int x = iterations(N);
+    cout<<endl;
+    cout<<x<<endl;
 
-    print_t(G,n);
-    RadixSort_C2(G,n);
-    print_t(G,n);
     return 0;
 }
