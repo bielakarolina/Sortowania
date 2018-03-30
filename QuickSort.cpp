@@ -74,7 +74,8 @@ void QuickSort(int t[], int p, int r)
     if(p<r)
     {
         int q=Partition2(t,p,r);
-        QuickSort(t,p,q); // lub dla odpowiedniego partition QuickSort(t,p,q-1)
+        cout<<q<<endl;
+        QuickSort(t,p,q-1); // lub dla odpowiedniego partition QuickSort(t,p,q-1)
         QuickSort(t,q+1,r);
     }
 
@@ -189,6 +190,7 @@ void QuickSort_stos(int t[n],int p, int l) // kod z notatek Agaty
         stos.pop();
 
         q=Partition2(t,p,l);
+        cout<<q<<endl;
         if(p<q-1)
         {
             stos.push(p);
@@ -209,16 +211,17 @@ void QuickSort_stos(int t[n],int p, int l) // kod z notatek Agaty
 
 
 //DZIAŁAJĄCY SELECT
-int select1(int * A, int l, int r, int k) {
-    if(l == r)
-        return A[l];
-    int q = Partition2(A, l, r);	// index podzialu
-//    for(int i=0;i<10;i++)
-//        cout<<A[i]<<" ";
-//    cout<<endl;
-    int tmp = q - l + 1;	// liczba elementow w lewej podtablicy
+int select1(int * A, int p, int r, int k) {
+    if(p == r)
+        return A[p];
+    int q = Partition2(A, p, r);	// index podzialu
+//moja tablica ma rozmiar 4
+  //  for(int i=0;i<4;i++)
+    //    cout<<A[i]<<" ";
+    //cout<<endl;
+    int tmp = q - p + 1;	// liczba elementow w lewej podtablicy
     if(k==tmp) return A[q];
-    else if(k<tmp) return select1(A,l,q-1,k);
+    else if(k<tmp) return select1(A,p,q-1,k);
     else return select1(A,q+1,r,k-tmp);
 
 }
@@ -244,26 +247,52 @@ void print_t(int A[],int s){
 }
 int main()
 {
-    srand(time(0));
-    Node *list=NULL;
+//    srand(time(0));
+//    Node *list=NULL;
+//
+////    for(int i=0;i<10;i++)
+////        add1(list,rand() /( double ) RAND_MAX *( 10 ));
+////    print(list);
+////    QuickSort_list(list);
+////    print(list);
+//  cout<<"Sortowanie tablicy QuickSort - stos"<<endl;
+//    int n=10;
+//  int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
+//    print_t(T,n);
+//    QuickSort_stos(T,0,n-1);
+//    print_t(T,n);
 
-//    for(int i=0;i<10;i++)
-//        add1(list,rand() /( double ) RAND_MAX *( 10 ));
-//    print(list);
-//    QuickSort_list(list);
-//    print(list);
-  cout<<"Sortowanie tablicy QuickSort - stos"<<endl;
-    int n=10;
-  int T[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
-    print_t(T,n);
-    QuickSort_stos(T,0,n-1);
-    print_t(T,n);
-    cout<<"Sortowanie tablicy select:"<<endl;
-    int T1[n]={5, 10, 0, 20, 15, 35, 25, 30, 46, 1};
-    int k=select1(T1,0,n,2);
+
+
+    //cout<<"Sortowanie tablicy QuickSort:"<<endl;
+ //   int T1[4]={10, 7, 6, 15};
+//    print_t(T1,4);
+//    QuickSort_stos(T1,0,3);
+    cout<< "1 element"<<endl;
+    int T1[4]={10, 7, 6, 15};
+    print_t(T1,4);
+    int k=select1(T1,0,3,1);
     cout<<k<<endl;
-    cout<<"Sortowanie tablicy suma pomiędzy indeksami w tablicy"<<endl;
-    cout<<SumBetween(T1,0,3,10);
+    cout<< "2 element"<<endl;
+    int T2[4]={10, 7, 6, 15};
+    //print_t(T2,4);
+    k=select1(T2,0,3,2);
+    cout<<k<<endl;
+    cout<< "3 element"<<endl;
+    int T3[4]={10, 7, 6, 15};
+    //print_t(T3,4);
+    k=select1(T3,0,3,3);
+    cout<<k<<endl;
+    cout<< "4 element"<<endl;
+    int T4[4]={10, 7, 6, 15};
+    //print_t(T4,4);
+    k=select1(T2,0,3,4);
+    cout<<k<<endl;
+
+
+
+    // cout<<"Sortowanie tablicy suma pomiędzy indeksami w tablicy"<<endl;
+  //  cout<<SumBetween(T1,0,3,10);
 
 
     return 0;
