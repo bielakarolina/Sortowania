@@ -3,5 +3,5 @@ project(Sortowania)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES QuickSort.cpp)
+set(SOURCE_FILES Kolokwium2016_17A.cpp)
 add_executable(Sortowania ${SOURCE_FILES})

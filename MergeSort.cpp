@@ -155,26 +155,26 @@ int length(Node * &list){
 
 
 
-Node * MergeSort_list(Node * &list){ //dzielmy liste na dwie czesci i korzystamy z merge
+    Node * MergeSort_list(Node * &list){ //dzielmy liste na dwie czesci i korzystamy z merge
 
-    Node * list1=list;
-    int q = length(list1) / 2 ;
+        Node * list1=list;
+        int q = length(list1) / 2 ;
 
-    if (list->next == NULL)
-        return list;        // gdy jest tylko jeden element nie ma czego sortować
+        if (list->next == NULL)
+            return list;        // gdy jest tylko jeden element nie ma czego sortować
 
-    while (q - 1 > 0) {
-        list1 = list1->next;
-        q--;
-    }
+        while (q - 1 > 0) {
+            list1 = list1->next;
+            q--;
+        }
 
-    Node *list2 = list1->next; //przypisujemy tak jakby druga czesc naszej listy
-    list1->next = NULL;
-    list1 = list;
+        Node *list2 = list1->next; //przypisujemy tak jakby druga czesc naszej listy
+        list1->next = NULL;
+        list1 = list;
 
-    Node *l1 = MergeSort_list(list1);
-    Node *l2 = MergeSort_list(list2);
-    return mergeTwoLists(l1, l2);
+        Node *l1 = MergeSort_list(list1);
+        Node *l2 = MergeSort_list(list2);
+        return mergeTwoLists(l1, l2);
 
 }
 
