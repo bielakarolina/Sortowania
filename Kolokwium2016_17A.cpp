@@ -125,28 +125,7 @@ Node * sortList (Node *first){
     return first;
 }
 
-int main(){
-    Node *list= NULL;
 
-
-// Generujemy zawartość tablicy d[] i wyświetlamy ją
-
-    srand((unsigned)time(NULL));
-    double value;
-
-    for(int i = 4; i >0; i--){
-        value= (double)i/(rand()%100);
-
-        add(list,value);
-   }
-
-    print_l(list);
-    sortList(list);
-    cout << "Po sortowaniu:\n\n";
-   print_l(list);
-    cout << endl;
-    return 0;
-}
 
 
 
@@ -164,7 +143,7 @@ int Partition( int A[], int p, int r){
     for(j=p; j<r ;j++){
         if(A[j]<=x) {
             i++;
-            swap(A[j], A[i]);
+            swap(A[i], A[j]);
         }
     }
     swap(A[r],A[i+1]);
@@ -172,20 +151,44 @@ int Partition( int A[], int p, int r){
 }
 
 int select(int A[], int p, int r, int k){
-    if(p == r) return A[p];
+    if(p == r) return p;
     int q=Partition(A,p,r);
     int tmp = q-p+1;
-    if(tmp == k) return A[k];
-    if(tmp < k) return select(A,p,q-1,k);
-    else return select(A,q+1,r,tmp-k);
+    if(tmp == k) return q;
+    if(k < tmp) return select(A,p,q-1,k);
+    else return select(A,q+1,r,k-tmp);
 }
 int SumBetween(int T[], int from, int to, int n){
-    int p = select(T,0,n,from);
-    int k = select(T,0,n,to);
+    int p = select(T,0,n-1,from);
+    cout<<p<<endl;
+    int k = select(T,0,n-1,to);
+    cout<<p<<" "<< k<<endl;
     int sum = 0;
-    for(int i=p; i<k ;i++) sum+=T[i];
+    for(int i=p; i<=k ;i++)
+            sum += T[i];
     return sum;
 
+}
+int main(){
+//    Node *list= NULL;
+//// Generujemy zawartość tablicy d[] i wyświetlamy ją
+//    srand((unsigned)time(NULL));
+//    double value;
+//    for(int i = 4; i >0; i--){
+//        value= (double)i/(rand()%100);
+//
+//        add(list,value);
+//    }
+//    print_l(list);
+//    sortList(list);
+//    cout << "Po sortowaniu:\n\n";
+//    print_l(list);
+//    cout << endl;
+     cout<<"Sortowanie tablicy suma pomiędzy indeksami w tablicy"<<endl;
+    int T1[4]={10, 7, 6, 15};
+    //cout<<select(T1,0,3,1);
+    cout<<SumBetween(T1,3,4,4);
+    return 0;
 }
 
 
