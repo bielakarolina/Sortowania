@@ -107,7 +107,7 @@ Node *mergeTwoLists(Node* &l1, Node* &l2) {
         p->next = p2;
     }
 
-    return head;
+    return head; //head->next , przetestuj później
 
 }
 
