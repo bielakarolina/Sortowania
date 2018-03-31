@@ -81,8 +81,36 @@ Node * MergeSort_list(Node * &list){ //dzielmy liste na dwie czesci i korzystamy
     return mergeTwoLists(l1, l2);
 
 }
+void add(Node* &l,double value){
+    Node* temp=l;
+    if(temp){
+        while(temp->next) temp=temp->next;
+        temp->next=new Node;
+        temp->next->value=value;
+        temp->next->next=NULL;
+    } else {
+        l=new Node;
+        l->value=value;
+        l->next=NULL;
+    }
+}
 
-void print_l(Node* l){
+void add_node(Node* &l,Node *gogo){
+    Node* temp=l;
+    if(temp){
+        while(temp->next) temp=temp->next;
+        temp->next=new Node;
+        temp->next = gogo;
+        temp->next->next=NULL;
+    } else {
+        l=new Node;
+        l = gogo;
+        l->next=NULL;
+    }
+}
+
+void print_l(Node* list){
+    Node * l= list;
     while(l){
         cout << l->value << " ";
         l=l->next;
@@ -116,10 +144,11 @@ Node * sortList (Node *first){
        first = first->next;
         n++;
     }
+    //cout<<n<<endl;
     first = guard;
     if(n == 0) return NULL;
 
-    double  interval_length = (double)4/n;
+    double  interval_length = (double)10/n;
     Node ** bucket = new Node *[n];
     for(int i=0; i<n; i++){
         bucket[i] = new Node;
@@ -130,7 +159,7 @@ Node * sortList (Node *first){
         tmp = first;
         first = first->next;
         tmp->next = NULL;
-    add_node_at_start(bucket[((int)(tmp->value*interval_length)/4)],tmp);     ////////
+    add_node_at_start(bucket[((int)(tmp->value*interval_length)/10)],tmp);     ////////
     }
 
     for(int i=0; i<n;i++) {
@@ -138,19 +167,6 @@ Node * sortList (Node *first){
         MergeSort_list(bucket[i]);}
     first = merge_buckets(bucket, n);
     return first;
-}
-void add(Node* &l,double value){
-    Node* temp=l;
-    if(temp){
-        while(temp->next) temp=temp->next;
-        temp->next=new Node;
-        temp->next->value=value;
-        temp->next->next=NULL;
-    } else {
-        l=new Node;
-        l->value=value;
-        l->next=NULL;
-    }
 }
 
 int main(){
