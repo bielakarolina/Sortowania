@@ -16,71 +16,25 @@ struct Node{
     double value;
     Node * next;
 };
-Node *mergeTwoLists(Node* &l1, Node* &l2) {
-    Node *head = new Node;
-    Node *p = head;
-
-    Node *p1=l1;
-    Node *p2=l2;
-    while(p1!=NULL && p2!=NULL){
-        if(p1->value < p2->value){
-            p->next = p1;
-            p1 = p1->next;
-        }else{
-            p->next = p2;
-            p2 = p2->next;
-        }
-        p=p->next;
-    }
-
-    if(p1!=NULL){ //wersja bez wartownika, bo tutaj sie nie da
-        p->next = p1;
-    }
-
-    if(p2!=NULL){
-        p->next = p2;
-    }
-
-    return head;
-
+void insert(Node * list, Node * el) { 
+    while (list->next != NULL && list->next->value < el->value) 
+        list = list->next; 
+    el->next = list->next; 
+    list->next = el; 
 }
-int length(Node * &list){
-
-    int licznik=0;
-    Node * tmp=list;
-
-    while(tmp!=NULL){
-        licznik++;
-        tmp=tmp->next;
-    }
-    return licznik;
+Node * isort(Node * &first) {
+    Node * sorted = new Node; 
+    sorted->next = NULL; 
+    while (first->next != NULL){ 
+        Node * tmp = first->next; 
+        first->next = tmp->next; 
+        tmp->next = NULL; 
+        insert(sorted, tmp); 
+    } 
+    delete first; 
+    return sorted; 
 }
 
-
-
-
-Node * MergeSort_list(Node * &list){ //dzielmy liste na dwie czesci i korzystamy z merge
-
-    Node * list1=list;
-    int q = length(list1) / 2 ;
-
-    if (list->next == NULL)
-        return list;        // gdy jest tylko jeden element nie ma czego sortować
-
-    while (q - 1 > 0) {
-        list1 = list1->next;
-        q--;
-    }
-
-    Node *list2 = list1->next; //przypisujemy tak jakby druga czesc naszej listy
-    list1->next = NULL;
-    list1 = list;
-
-    Node *l1 = MergeSort_list(list1);
-    Node *l2 = MergeSort_list(list2);
-    return mergeTwoLists(l1, l2);
-
-}
 void add(Node* &l,double value){
     Node* temp=l;
     if(temp){
@@ -95,7 +49,7 @@ void add(Node* &l,double value){
     }
 }
 
-void add_node(Node* &l,Node *gogo){
+void add_Node(Node* &l,Node *gogo){
     Node* temp=l;
     if(temp){
         while(temp->next) temp=temp->next;
@@ -130,10 +84,10 @@ Node *merge_buckets(Node **bucket, int n){
     return guard->next;
 }
 
-void add_node_at_start(Node *&first,Node *new_node){
-    new_node->next = first;
-    first = new_node;
-    first->next = NULL;
+void add_Node_at_start(Node *&first,Node *new_Node){
+    new_Node->next = first;
+    first = new_Node;
+
 }
 
 Node * sortList (Node *first){
@@ -148,7 +102,9 @@ Node * sortList (Node *first){
     first = guard;
     if(n == 0) return NULL;
 
-    double  interval_length = (double)10/n;
+
+
+
     Node ** bucket = new Node *[n];
     for(int i=0; i<n; i++){
         bucket[i] = new Node;
@@ -159,12 +115,12 @@ Node * sortList (Node *first){
         tmp = first;
         first = first->next;
         tmp->next = NULL;
-    add_node_at_start(bucket[((int)(tmp->value*interval_length)/10)],tmp);     ////////
+    add_Node_at_start(bucket[((int)(tmp->value*n)/10)],tmp);     ////////
     }
 
     for(int i=0; i<n;i++) {
-        if(bucket[i]!=NULL)
-        MergeSort_list(bucket[i]);}
+
+        isort(bucket[i]);}
     first = merge_buckets(bucket, n);
     return first;
 }
@@ -183,8 +139,7 @@ int main(){
 
         add(list,value);
    }
-  //  add_node_at_start(list,4);
-   // add_node_at_start(list,9);
+
     print_l(list);
     sortList(list);
     cout << "Po sortowaniu:\n\n";
@@ -201,6 +156,37 @@ int main(){
 // Można przyjąć, że liczby w tablicy T są parami różne (ale nie można przyjmować żadnego innego rozkładu danych).
 // Zaimplementowana funkcja powinna być możliwie jak najszybsza. Proszę oszacować jej złożoność czasową
 // (oraz bardzo krótko uzasadnić to oszacowanie).
+
+int Partition( int A[], int p, int r){
+    int i,j;
+    int x=A[r];
+    i=p-1;
+    for(j=p; j<r ;j++){
+        if(A[j]<=x) {
+            i++;
+            swap(A[j], A[i]);
+        }
+    }
+    swap(A[r],A[i+1]);
+    return i+1;
+}
+
+int select(int A[], int p, int r, int k){
+    if(p == r) return A[p];
+    int q=Partition(A,p,r);
+    int tmp = q-p+1;
+    if(tmp == k) return A[k];
+    if(tmp < k) return select(A,p,q-1,k);
+    else return select(A,q+1,r,tmp-k);
+}
+int SumBetween(int T[], int from, int to, int n){
+    int p = select(T,0,n,from);
+    int k = select(T,0,n,to);
+    int sum = 0;
+    for(int i=p; i<k ;i++) sum+=T[i];
+    return sum;
+
+}
 
 
 //3. Proszę opisać (bez implementacji!) jak najszybszy algorytm, który otrzymuje na wejściu pewien ciąg n liter
