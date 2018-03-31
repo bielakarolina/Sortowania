@@ -163,7 +163,7 @@ Node * sortList (Node *first){
     }
 
     for(int i=0; i<n;i++) {
-        print_l(bucket[i]);
+        if(bucket[i]!=NULL)
         MergeSort_list(bucket[i]);}
     first = merge_buckets(bucket, n);
     return first;
@@ -179,7 +179,7 @@ int main(){
     double value;
 
     for(int i = 4; i >0; i--){
-        value= (double)i/(rand()%10);
+        value= (double)i/(rand()%100);
 
         add(list,value);
    }
