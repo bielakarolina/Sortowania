@@ -58,6 +58,10 @@ void SumSort(int A[], int B[], int n) {
 //algorytm sortowania tak powstałych danych. Algorytm powinien być możliwie jak najszybszy.
 //Proszę oszacować i podać jego złożoność czasową.
 //
+//Pomysł
+//Rozdzielamy na parzyste i nieparzyste, sortujemy parzyste i merge, dziękuje do widzenia
+
+
 //3. Dana jest struktura Node opisująca listę jednokierunkową:
 //struct Node { Node * next; int value; };
 //Proszę zaimplementować funkcję Node* fixSortedList( Node* L ),
@@ -68,3 +72,5 @@ void SumSort(int A[], int B[], int n) {
 //        zwrócić wskaźnik do głowy tej listy.
 //Można założyć, że wszystkie liczby na liście są różne i że lista ma co najmniej dwa elementy.
 //Funkcja powinna działać w czasie liniowym względem długości listy wejściowej.
+
+//przechodząc 3 wskaźnikami wyszukujemy feralnego chujka, dzielimy według tego chujka listę na dwie posortowane i merge

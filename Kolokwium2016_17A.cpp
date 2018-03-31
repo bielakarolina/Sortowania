@@ -16,23 +16,34 @@ struct Node{
     double value;
     Node * next;
 };
-void insert(Node * list, Node * el) { 
-    while (list->next != NULL && list->next->value < el->value) 
-        list = list->next; 
-    el->next = list->next; 
-    list->next = el; 
-}
-Node * isort(Node * &first) {
-    Node * sorted = new Node; 
-    sorted->next = NULL; 
-    while (first->next != NULL){ 
-        Node * tmp = first->next; 
-        first->next = tmp->next; 
-        tmp->next = NULL; 
-        insert(sorted, tmp); 
-    } 
-    delete first; 
-    return sorted; 
+void insertionSort(Node *&first) {
+
+    if (first == NULL || first->next == NULL) return;
+
+    Node *last = first, *curr = first->next;
+    Node *p, *prev;
+
+    while (curr != NULL) {
+        p = first, prev = NULL;
+        while (p != NULL && p != curr && p->value < curr->value) {
+            prev = p;
+            p = p->next;
+        }
+
+        if (p == curr) {
+            last = curr;
+        } else if (p == first) {
+            last->next = curr->next;
+            curr->next = first;
+            first = curr;
+        } else {
+            last->next = curr->next;
+            prev->next = curr;
+            curr->next = p;
+        }
+
+        curr = last->next;
+    }
 }
 
 void add(Node* &l,double value){
@@ -45,20 +56,6 @@ void add(Node* &l,double value){
     } else {
         l=new Node;
         l->value=value;
-        l->next=NULL;
-    }
-}
-
-void add_Node(Node* &l,Node *gogo){
-    Node* temp=l;
-    if(temp){
-        while(temp->next) temp=temp->next;
-        temp->next=new Node;
-        temp->next = gogo;
-        temp->next->next=NULL;
-    } else {
-        l=new Node;
-        l = gogo;
         l->next=NULL;
     }
 }
@@ -98,12 +95,8 @@ Node * sortList (Node *first){
        first = first->next;
         n++;
     }
-    //cout<<n<<endl;
     first = guard;
     if(n == 0) return NULL;
-
-
-
 
     Node ** bucket = new Node *[n];
     for(int i=0; i<n; i++){
@@ -118,16 +111,11 @@ Node * sortList (Node *first){
     add_Node_at_start(bucket[((int)(tmp->value*n)/10)],tmp);     ////////
     }
 
-    for(int i=0; i<n;i++) {
+    for(int i=0; i<n;i++) insertionSort(bucket[i]);
 
-        isort(bucket[i]);}
     first = merge_buckets(bucket, n);
     return first;
 }
-
-
-
-
 
 //2. Proszę zaimplementować funkcję: int SumBetween(int T[], int from, int to, int n);
 // Zadaniem tej funkcji jest obliczyć sumę liczb z n elementowej tablicy T,
@@ -165,29 +153,32 @@ int SumBetween(int T[], int from, int to, int n){
     cout<<p<<" "<< k<<endl;
     int sum = 0;
     for(int i=p; i<=k ;i++)
-            sum += T[i];
+        sum += T[i];
+
     return sum;
 
 }
 int main(){
-//    Node *list= NULL;
-//// Generujemy zawartość tablicy d[] i wyświetlamy ją
-//    srand((unsigned)time(NULL));
-//    double value;
-//    for(int i = 4; i >0; i--){
-//        value= (double)i/(rand()%100);
-//
-//        add(list,value);
-//    }
-//    print_l(list);
-//    sortList(list);
-//    cout << "Po sortowaniu:\n\n";
-//    print_l(list);
-//    cout << endl;
-     cout<<"Sortowanie tablicy suma pomiędzy indeksami w tablicy"<<endl;
-    int T1[4]={10, 7, 6, 15};
+    //zadanie numer 1
+    cout<<"BucketSort"<<endl;
+    Node *list= NULL;
+    srand((unsigned)time(NULL));
+    double value;
+    for(int i = 10; i >0; i--){
+        value= (double)(rand()%10);
+
+        add(list,value);
+    }
+    print_l(list);
+    sortList(list);
+    cout << "Po posortowaniu:\n\n";
+    print_l(list);
+    cout << endl;
+    //Zadanie numer 2
+     cout<<"Suma pomiędzy kolejnymi wartosciami w tablicy"<<endl;
+    int T1[10]={10, 7, 6, 15,7,0,20,50,1,2};
     //cout<<select(T1,0,3,1);
-    cout<<SumBetween(T1,3,4,4);
+    cout<<SumBetween(T1,3,4,10);
     return 0;
 }
 
@@ -200,14 +191,6 @@ int main(){
 // który powtarza się dwa razy (to, że te wystąpienia na siebie nachodzą nie jest istotne).
 // Zaproponowany algorytm opisać, uzasadnić jego poprawność oraz oszacować jego złożoność.
 
-//Prosze opisac (bez implementacji!) jak najszybszy algorytm, ktory otrzymuje na wejsciu pewien
-//        ciag n liter oraz liczbe k i wypisuje najczesciej powtarzajacy sie podciag dlugosci k (jesli ciagow
-//        mogacych stanowic rozwiazanie jest kilka, algorytm zwraca dowolny z nich). Mozna zalozyc, ze
-//ciag sklada sie wylacznie z liter a i b.
-//Na przyklad dla ciagu ababaaaabb oraz k = 3 rozwiazaniem jest zarowno ciag aba jak i ciag aaa, ktory
-//        powtarza sie dwa razy (to, ze te wystapienia na siebie nachodza nie jest istotne). Zaproponowany
-//        algorytm opisac, uzasadnic jego poprawnosc oraz oszacowac jego zlozonosc.
-//
 //Rozwiazanie:
 //1) Dzielimy podany ciag wejsciowy na n-k+1 slow k-elementowych, np. dla ciagu wejsciowego ababaaaabb i k=3 dokonujemy
 //        nastepujacego podzialu:
