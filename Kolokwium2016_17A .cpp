@@ -8,6 +8,60 @@
 //        wygenerowaną zgodnie z rozkładem jednostajnym na przedziale [0,10) i sortuje jej zawartość w kolejności niemalejącej.
 //Funkcja powinna być możliwie jak najszybsza (biorąc pod uwagę warunki zadania). Proszę oszacować złożoność zaimplementowanej funkcji.
 
+Node struct{
+    int value;
+    Node * next;
+};
+//scalanie kubełków, dołączamy niepusty kubełek i przesuwamy się na jego koniec;
+Node *merge_buckets(Node **bucket, int n){
+    Node * result = new Node, *guard;
+    quard = result;
+    for(int i=0; i<n; i++){
+        if(bucket[i]){
+            result->next = bucket[i];
+            while(result->next) result = result ->next;
+        }
+    }
+    return quard->next;
+}
+
+void add_node_at_start(Node *&first,Node *new_node){
+    new_node->next = first;
+    first = new_node;
+}
+
+Node * sortList (Node *first){
+    int n = 0;
+    Node * guard = first;
+
+    while(first){
+       first = first->next;
+        n++;
+    }
+    first = guard;
+    if(n == 0) return NULL;
+
+    double  interval_length = (double)4/n;
+    Node ** bucket = new Node *[n];
+    for(int i=0; i<n; i++){
+        bucket[i] = new Node;
+        bucket[i] = NULL;
+    }
+    Node * tmp = NULL;
+    while(first){
+        tmp = first;
+        first = first->next;
+        tmp->next = NULL;
+    add_node_at_start(bucket[],tmp);     ////////
+    }
+    for(int i=0; i<n;i++) merge_buckets(bucket[i]);
+    first = merge_buckets(bucket, n);
+    return first;
+}
+
+
+
+
 //2. Proszę zaimplementować funkcję: int SumBetween(int T[], int from, int to, int n);
 // Zadaniem tej funkcji jest obliczyć sumę liczb z n elementowej tablicy T,
 // które w posortowanej tablicy znajdywałyby się na pozycjach o indeksach od from do to (włącznie).
