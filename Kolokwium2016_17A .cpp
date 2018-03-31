@@ -52,7 +52,7 @@ Node * sortList (Node *first){
         tmp = first;
         first = first->next;
         tmp->next = NULL;
-    add_node_at_start(bucket[],tmp);     ////////
+    add_node_at_start(bucket[((int)(tmp->value*interval_length)/4)],tmp);     ////////
     }
     for(int i=0; i<n;i++) merge_buckets(bucket[i]);
     first = merge_buckets(bucket, n);
