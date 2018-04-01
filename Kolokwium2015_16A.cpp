@@ -49,7 +49,7 @@ using namespace std;
 //    delete[] C;
 //}
 
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 //2. Dana jest n elementowa tablica A zawierająca liczby naturalne (potencjalnie bardzo duże).
 //Wiadomo, że tablica A powstała w dwóch krokach.
 //Najpierw wygenerowano losowo (z nieznanym rozkładem) n różnych liczn nieparzystych i
@@ -103,6 +103,7 @@ void add(Node* &l,int value){
         l->next=NULL;
     }
 }
+
 Node *mergeTwoLists(Node* &l1, Node* &l2) {
     Node *head = new Node;
     Node *p;
@@ -120,7 +121,7 @@ Node *mergeTwoLists(Node* &l1, Node* &l2) {
         p=p->next;
     }
 
-    if(p1!=NULL){ //wersja bez wartownika, bo tutaj sie nie da
+    if(p1!=NULL){
         p->next = p1;
     }
 
