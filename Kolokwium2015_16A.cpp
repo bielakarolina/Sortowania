@@ -65,6 +65,7 @@ using namespace std;
 //Wykonujemy funkcje MergeSort dla tablicy z wartościami parzystymi O((logn)*log(logn))
 //Wykonujemy Merge dla obu tablic - zlozonosc O(n)
 //Suma: O(2n)+ O((logn)*log(logn)) - NIE WIEM CZY DA SIĘ SKRÓCIĆ
+//według internetów to skraca się do O(n) bo O(n)>O((logn)*log(logn))
 
 //3. Dana jest struktura Node opisująca listę jednokierunkową:
 //struct Node { Node * next; int value; };
