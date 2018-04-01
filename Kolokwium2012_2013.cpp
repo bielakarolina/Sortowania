@@ -57,6 +57,7 @@ bool possible( char* u, char* v, char* w ){
     }
     return true;
 }
+//zlozonosc powyzszego programu to n+wielkosc kazdej z tablic slowa, czyli O(n+u+v+w) gdzie n jest zakresem liter
 int main(){
     //har * ponk="ponk";
     char *ponk = new char[4];
