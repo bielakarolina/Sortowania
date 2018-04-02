@@ -3,5 +3,5 @@ project(Sortowania)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES OdBasi.cpp)
+set(SOURCE_FILES EgzOthers.cpp)
 add_executable(Sortowania ${SOURCE_FILES})

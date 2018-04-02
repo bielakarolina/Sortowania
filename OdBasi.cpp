@@ -75,8 +75,8 @@ int largestIntersection(double a[], double b[], int n)
   //  print(b,n);
     Quicksort(a,b,0,n-1);		//sortujemy tablicê a rosn¹co i odpowiednio modyfikujemy Quicksorta ¿eby
     //od razu te¿ zamienia³ w tablicy b ¿eby nie straciæ przedzia³ów
-   // print(a,n);
-    //print(b,n);
+   print(a,n);
+   print(b,n);
 
     double c[n], d[n];			//¿eby mo¿na by³o swobodnie nadpisywaæ i nie traciæ oryginalnych danych
     for(int i = 0; i<n;i++){
@@ -94,17 +94,19 @@ int largestIntersection(double a[], double b[], int n)
             			//jesli tak to tworzymy nowy przedzia³ -> [6,10]
                 licznik++;
             }
-            if (d[i] > d[j]) {
-              licznik++;
+            else if (d[i] >=d[j]) {
+                licznik++;
             }
+//            else {
+//                cout<<c[i]<<" "<<c[j]<<endl;
+//                cout<<d[i]<<" "<<d[j]<<endl;
+//                licznik--;
+//            }
 
-                if(d[i] < d[j]){				//to samo robmy dla kolejnego b;
-              //  d[i] = d[j];
-           //     cout<<d[i]<<" "<<d[j]<<endl;
-                licznik--;
-            }
 
         }
+    //    cout<<"............"<<licznik<<endl;
+
 
         maks = max(maks, licznik);
         licznik=1;
@@ -118,8 +120,8 @@ int largestIntersection(double a[], double b[], int n)
 int main(){
 
 
-    double a1[7]={4,6,5,1,11,13,20};
-    double b1[7]={10,15,9,4,12,14,30};
+    double a1[7]={4,6,5,1,9,13,0};
+    double b1[7]={10,15,9,4,12,20,9};
 
     int x= largestIntersection(a1,b1,7);
     cout<<x<<endl;

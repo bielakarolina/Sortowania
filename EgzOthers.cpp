@@ -2,6 +2,10 @@
 //// Created by Karolina on 02.04.2018.
 ////
 //
+#include <iostream>
+
+#include <math.h>
+using namespace std;
 //Zadanie 2. Scalanie dwóch posortowanych list.
 //
 //Zadanie 1. (zadania krótkie) Proszę rozwiązać następujące zadania:
@@ -22,6 +26,73 @@
 //Opisująca punkty w przestrzeni . Proszę zaimplementować funkcję Void heapsort(Point* A, int n);
 //Która otrzymuje na wejściu elementową tablicę struktur typu Point I sortuje ją w kolejności rosnącej względem
 //odległości punktu od początku układu współrzędnych, korzystając z algorytmu heapsort.
+struct Point {
+        double x;
+        double y;
+};
+struct Dis{
+    Point A;
+    int distance;
+};
+int parent(int i){ return (i-1)/2;}
+int left(int i){return 2*i+1;}
+int right(int i){return 2*i+2;}
+
+double d(Point A){
+    return sqrt(pow(A.x,2)+pow(A.y,2));
+}
+void heapify(Point *A,int i,int n){
+    int indmax=i;
+    if(d(A[left(i)])>d(A[indmax])&& left(i)<n)
+        indmax=left(i);
+    if(d(A[right(i)])>d(A[indmax])&& right(i)<n)
+        indmax=right(i);
+
+    if(i!=indmax){
+        swap(A[i],A[indmax]);
+        heapify(A,indmax,n);
+    }
+}
+void buildHeap(Point *A,int n){
+    for(int i=parent(n-1);i>=0;i--)
+        heapify(A,i,n);
+}
+
+
+void Heapsort(Point* A, int n){
+    buildHeap(A,n);
+    for(int i=n-1;i>=0;i--){
+        swap(A[i], A[0]); // wyrzucamy z kopca pierwszy element i naprawiamy resztę (żeby znowu pierwszy element był największy)
+        heapify(A,0,i); // czyli naprawia od korzenia do (j - 1) elementu
+
+    }
+}
+void print(Point A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<"["<<A[i].x<<",";
+        cout<<A[i].y<<"]";
+    }
+    cout<<endl;
+
+    cout<<endl;
+}
+int main(){
+    Point A[4];
+    A[0].x=3;
+    A[0].y=4;
+    A[1].x=1;
+    A[1].y=1;
+    A[2].x=0;
+    A[2].y=0;
+    A[3].x=0;
+    A[3].y=3;
+    print(A,4);
+    Heapsort(A,4);
+    print(A,4);
+
+
+}
+
 //
 //Zadanie 1. Dana jest struktura danych
 //Struct Rectangle { double x,y; double w,h; };
