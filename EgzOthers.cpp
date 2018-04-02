@@ -32,6 +32,15 @@ using namespace std;
 //Zadanie 4. Proszę omówić i zaimplementować możliwie najszybszą funkcję sortującą listę jednokierunkową z danymi typu double.
 //Proszę zdefiniować wszystkie potrzebne struktury danych.
 //
+//1.Sortujemy wg x   O(nlogn)
+//2.Sprawdzamy czy dla interwalów w postaci (x1,y1) , (x2,y2)   x2<y1<y2
+//1.Jeśli jest to zapisujemy sobie długość przedziału i jego y i sprawdzamy kolejny.
+//2.Gdy natrafimy na y2 <y1 to pomijamy bo oznacza że przedział zawiera się w naszym
+//3.Gdy natrafimy na x2>y1 to podmieniamy nasz y1 na maksymalny y2 i licznik ++
+//4.Kontynuujemy dla nowego y1 do końca tablicy chyba że licznik ==t
+//3.POwtarzamy dla kolejnego elementu tablicy
+
+
 //Zadanie 1. Dana jest struktura danych
 //Struct Point { double x,y; };
 //Opisująca punkty w przestrzeni . Proszę zaimplementować funkcję Void heapsort(Point* A, int n);
