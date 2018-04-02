@@ -201,35 +201,39 @@ int largestIntersection(double a[],double b[],int n){
     //print(intervals->b,n);
     int max_interval=0;
     int j=1;
-    interval k,l;
+    interval k,l,m;
     k.a=0;k.b=0;
     l.a=0,l.b=INT8_MAX;
+    m.a=0,m.b=0;//do przechowywania finalnego przedzialu
     for(int i=1;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
         k.a=max_d(intervals[i].a,intervals[i-1].a);
         k.b=min_d(intervals[i].b,intervals[i-1].b);
 
-        if(k.a<=k.b) {
+        if(k.a<=k.b && l.a <= k.a && l.b >= k.b) {//jeżeli poprzedni nachodzący mieści się w kolejnym, kontynujemy przedział
             cout << k.a << " " << k.b << endl;
-
-            if (l.a <= k.a && l.b >= k.b) {
                 j++;
                 l.a = max_d(l.a, k.a);
                 l.b = min_d(l.b, k.b);
-                cout << "l: "<<l.a << " " << l.b << endl;
-            } else {
-                l.a = k.a;
-                l.b = k.b;
-
-            }
+                cout << "Kontynuacja: "<<l.a << " " << l.b << endl;
         }
-        else{
-            if(max_interval<j) {
+        else if(k.a<=k.b && !(l.a <= k.a && l.b >= k.b) ){
+            //jeżeli poprzedni nachodzacy nie miesci się w kolejnym
+            l.a = k.a;
+            l.b = k.b;
+            j=2; //bo dwa przedziały się przecinają
+            cout << "Nachodzący nowy: "<<l.a << " " << l.b <<endl;
+        }
+        if(max_interval<j){
+                m.a=l.a;
+                m.b=l.b;
                 max_interval=j;
-                j=1;
-            }
         }
+
+
+
     }
     cout<<"Ilość przecinających się przedziałów"<<" "<<max_interval<<endl;
+    cout<<"Dla przedziału"<<"["<<m.a<<" ,"<<m.b<<"]"<<endl;
 }
 int main() {
     //zadanie numer 1
