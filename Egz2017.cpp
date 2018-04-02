@@ -201,9 +201,26 @@ int largestIntersection(double a[],double b[],int n){
     //print(intervals->b,n);
     int max_interval=0;
     int j=1;
+    interval k,l;
+    k.a=0;k.b=0;
+    l.a=0,l.b=INT8_MAX;
     for(int i=1;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
-        if(max_d(intervals[i].a,intervals[i-1].a)<min_d(intervals[i].b,intervals[i-1].b)){
-            j++;
+        k.a=max_d(intervals[i].a,intervals[i-1].a);
+        k.b=min_d(intervals[i].b,intervals[i-1].b);
+
+        if(k.a<=k.b) {
+            cout << k.a << " " << k.b << endl;
+
+            if (l.a <= k.a && l.b >= k.b) {
+                j++;
+                l.a = max_d(l.a, k.a);
+                l.b = min_d(l.b, k.b);
+                cout << "l: "<<l.a << " " << l.b << endl;
+            } else {
+                l.a = k.a;
+                l.b = k.b;
+
+            }
         }
         else{
             if(max_interval<j) {
