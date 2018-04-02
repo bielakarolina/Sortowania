@@ -88,15 +88,19 @@ int largestIntersection(double a[], double b[], int n)
     int licznik = 1;
 
     for(int i = 0; i<n-1; i++){
-        for(int j = i; j < n; j++){
+        for(int j = i+1; j < n; j++){
             //sprawdzamy czy kolejne a nie jest wiêksze od obecnego b
-            if(c[i] <= d[j]){				//w przedzia³ach [1,10] [6,12] d[i] = 10, c[j] = 6;
+            if(d[i]>=c[j]){				//w przedzia³ach [1,10] [6,12] d[i] = 10, c[j] = 6;
             			//jesli tak to tworzymy nowy przedzia³ -> [6,10]
                 licznik++;
             }
+            if (d[i] > d[j]) {
+              licznik++;
+            }
 
-            if(d[i] <= c[j]){				//to samo robmy dla kolejnego b;
+                if(d[i] < d[j]){				//to samo robmy dla kolejnego b;
               //  d[i] = d[j];
+           //     cout<<d[i]<<" "<<d[j]<<endl;
                 licznik--;
             }
 
