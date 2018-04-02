@@ -3,5 +3,5 @@ project(Sortowania)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES Kolokwium2012_2013.cpp)
+set(SOURCE_FILES Egz2017.cpp)
 add_executable(Sortowania ${SOURCE_FILES})
