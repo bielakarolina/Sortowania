@@ -200,13 +200,14 @@ int largestIntersection(double a[],double b[],int n){
     print(intervals,n); cout<<" ";
     //print(intervals->b,n);
     int max_interval=0;
-    int j=1;
+    int j=2;
     interval k,l,m;
     k.a=0;k.b=0;
-    l.a=0,l.b=INT8_MAX;
+    l.a=max_d(intervals[1].a,intervals[0].a); //przypisujemy do zmiennej wartość przecięcia
+    l.b=min_d(intervals[1].b,intervals[0].b);
     m.a=0,m.b=0;//do przechowywania finalnego przedzialu
-    for(int i=1;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
-        k.a=max_d(intervals[i].a,intervals[i-1].a);
+    for(int i=2;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
+        k.a=max_d(intervals[i].a,intervals[i-1].a); //przypisujemy do zmiennej wartość przecięcia
         k.b=min_d(intervals[i].b,intervals[i-1].b);
 
         if(k.a<=k.b && l.a <= k.a && l.b >= k.b) {//jeżeli poprzedni nachodzący mieści się w kolejnym, kontynujemy przedział
@@ -252,10 +253,10 @@ int main() {
 //    print_l(list);
 //    cout << endl;
     //Zadanie drugie, ciągi
-    double a[6]={4,6,5,1,11,13};
-    double b[6]={10,15,9,4,12,14};
+    double a[7]={4,6,5,1,11,13,9};
+    double b[7]={10,15,9,4,12,14,9};
 
-    largestIntersection(a,b,6);
+    largestIntersection(a,b,7);
 
     double a1[4]={1,2,4,6};
     double b1[4]={10,3,5,7};
