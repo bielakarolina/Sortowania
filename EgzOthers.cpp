@@ -15,9 +15,20 @@ using namespace std;
 //
 //Zadanie 2. Proszę opisać algorytm bez implementacji dla następującego problemu. Dana jest tablica A zawierająca n struktur tylu
 //Struct Interval { int  x, y; };
-//Elementy tablicy A opisują przedziały otwarte. Dana jest także liczba int t. Zadanie polega na wypisaniu t (lub mniej) przedziałów,
+//Elementy tablicy A opisują przedziały otwarte. Dana jest także liczba int t. Zadanie polega na wypisaniu t (lub mniej)
+// przedziałów,
 //których suma daje spójny przedział o maksymalnej długości. Proszę podać złożoność czasową algorytmu i uzasadnić jego poprawność.
 //
+//1. Wybieram odcinek A[B[curr_ind]], i to jest moj odcinek to ktorego bede dolaczal odcinki. I ustawiam curr_val na dlugosc tego odcinka
+//        Teraz szukam te ktore zaczelynaja sie przed koncem mojego ocinka i wybieram ten ktory sie najdalej konczy,
+//        dodaje do curr_val dlugosc o ktora sie powiekszym odcinek.
+//Dzialam az osiagne t(ilosc dodanych odcinkow):
+//- jezeli curr_val>max_val to uaktualnij max_val i max_ind
+//- uruchamiam punkt z zwiekszanym indeksem.
+//Jezeli nie osiagnalem t ilosci dodanych odcinkow to znaczy ze zaden odcinek nie zachodzi na koniec mojego odcinka
+//i wtedy szuakam najwczesniej zaczynajacego sie odcinka ktory nie zachodzi na moj odcinek i ide do punktu 1.
+//
+//Wypisuje t lub mniej odcinkow zaczynajac od max_ind dzialam zachlannie.
 //Zadanie 4. Proszę omówić i zaimplementować możliwie najszybszą funkcję sortującą listę jednokierunkową z danymi typu double.
 //Proszę zdefiniować wszystkie potrzebne struktury danych.
 //
@@ -99,3 +110,4 @@ int main(){
 //Opisująca prostokąty (pola x i y to współrzędne lewego górnego rogu prostokąta a w i h to jego wysokość i szerokość).
 //Proszę zaimplementować funkcję void heapsort(Rectangle* A, int n); która otrzymuje na wejściu n
 //        elementową tablicę struktur typu Rectangle i sortuje ją w kolejności rosnącej względem wartości pola prostokąta, korzystając z algorytmu heapsort.
+
