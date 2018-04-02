@@ -15,6 +15,8 @@ using namespace std;
 //Argumentem funkcji jest wskaźnik na głowę listy do posortowania a wynikiem powinien być wskaźnik na głowę
 //listy posortowanej. Sortowanie powinno polegać na porównywaniu wartości val list oraz przepinaniu wskaźników next.
 
+
+
 //2. Proszę zaprojektowac strukturę danych przechowującą liczby i pozwalającą na następujące operacje
 //(zakładamy, że wszystkie liczby umieszczane w strukturze są różne): Init(n).
 //Tworzy zadaną strukturę danych zdolną pomieścić maksymalnie n liczb. Insert(x).
