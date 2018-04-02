@@ -127,24 +127,116 @@ Node* sortList( Node* L ){
 //która zwraca największą liczbę przedziałów, które mają nie puste przecięcie.Np dla przedziałów
 //[1,10],[6,12],[2,5],[9,11] odp to 3 ponieważ [9,10] .Proszę także opisać alg w kilku zdaniach
 //i podać złoż czasowa.
-//tworzymy strukture w tórej będziemy zapamiętywać
-int largestIntersection(double a[],double b[],int n){
+//tworzymy strukture w której będziemy zapamiętywać początek i koniec przedziału
+//posortujemy strukture według początków przedziałów,
+//będziemy parami sprawdzać czy przedzialy się pokrywają na zasadzie [max(a),min(b)] jeśli max(a)<min(b) to ++
+struct interval{
+    double a;
+    double b;
+};
+void print(interval A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<A[i].a<<" ";
 
+    }
+    cout<<endl;
+    for(int i=0;i<s;i++){
+        cout<<A[i].b<<" ";
+
+    }
+    cout<<endl;
+}
+void merge(interval A[], int p, int q,int r){
+
+    int ip=p;
+    int ir=q+1;
+    int i=0;
+    interval * B=new interval[r-p];
+    while(ip<=q && ir<=r){
+        if(A[ip].a<A[ir].a){
+            B[i]=A[ip];
+            ip++;
+        }
+        else{
+            B[i]=A[ir];
+            ir++;
+        }
+        i++;
+    }
+    if(ip<=q)
+        while(ip<=q) B[i++]=A[ip++];
+    else
+        while(ir<=r)  B[i++]=A[ir++];
+
+    for(i=0;i<=r-p;i++) A[p+i]=B[i];
+}
+
+void MergeSort(interval A[],int p, int r){
+    int q;
+    if(p<r){
+        q=(p+r)/2;
+        MergeSort(A,p,q);
+        MergeSort(A,q+1,r);
+        merge(A,p,q,r);
+    }
+}
+double max_d(double x, double y){
+    if(x>y) return x;
+    else return y;
+}
+double min_d(double x, double y){
+    if(x<y) return x;
+    else return y;
+}
+int largestIntersection(double a[],double b[],int n){
+    interval *intervals =new interval[n];
+    for(int i=0;i<n;i++){
+        intervals[i].a=a[i];
+        intervals[i].b=b[i];
+    }
+//sortujemy według początków przedziału i zapamiętujemy ich końce
+    print(intervals,n);
+    MergeSort(intervals,0,n-1);
+    print(intervals,n); cout<<" ";
+    //print(intervals->b,n);
+    int max_interval=0;
+    int j=1;
+    for(int i=1;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
+        if(max_d(intervals[i].a,intervals[i-1].a)<min_d(intervals[i].b,intervals[i-1].b)){
+            j++;
+        }
+        else{
+            if(max_interval<j) {
+                max_interval=j;
+                j=1;
+            }
+        }
+    }
+    cout<<"Ilość przecinających się przedziałów"<<" "<<max_interval<<endl;
 }
 int main() {
     //zadanie numer 1
-    cout << "BucketSort" << endl;
-    Node *list = NULL;
-    srand((unsigned) time(NULL));
-    double value;
-    for (int i = 15; i > 0; i--) {
-        value = (double) (rand() % 40)/10;
+//    cout << "BucketSort" << endl;
+//    Node *list = NULL;
+//    srand((unsigned) time(NULL));
+//    double value;
+//    for (int i = 15; i > 0; i--) {
+//        value = (double) (rand() % 40)/10;
+//
+//        add(list, value);
+//    }
+//    print_l(list);
+//    sortList(list);
+//    cout << "Po posortowaniu:\n\n";
+//    print_l(list);
+//    cout << endl;
+    //Zadanie drugie, ciągi
+    double a[6]={4,6,5,1,11,13};
+    double b[6]={10,15,9,4,12,14};
 
-        add(list, value);
-    }
-    print_l(list);
-    sortList(list);
-    cout << "Po posortowaniu:\n\n";
-    print_l(list);
-    cout << endl;
+    largestIntersection(a,b,6);
+
+    double a1[4]={1,2,4,6};
+    double b1[4]={10,3,5,7};
+    largestIntersection(a1,b1,4);
 }
