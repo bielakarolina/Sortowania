@@ -200,13 +200,13 @@ int largestIntersection(double a[],double b[],int n){
     print(intervals,n); cout<<" ";
     //print(intervals->b,n);
     int max_interval=0;
-    int j=2;
+    int j=1;
     interval k,l,m;
     k.a=0;k.b=0;
     l.a=max_d(intervals[1].a,intervals[0].a); //przypisujemy do zmiennej wartość przecięcia
     l.b=min_d(intervals[1].b,intervals[0].b);
     m.a=0,m.b=0;//do przechowywania finalnego przedzialu
-    for(int i=2;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
+    for(int i=1;i<n;i++){//warunek na przecinanie jest ok, ale nie działa dobrze, np dla [1,4],[4,10],[5,9] zwraca 3 a powinno 2
         k.a=max_d(intervals[i].a,intervals[i-1].a); //przypisujemy do zmiennej wartość przecięcia
         k.b=min_d(intervals[i].b,intervals[i-1].b);
 
@@ -224,6 +224,7 @@ int largestIntersection(double a[],double b[],int n){
             j=2; //bo dwa przedziały się przecinają
             cout << "Nachodzący nowy: "<<l.a << " " << l.b <<endl;
         }
+        else j=0;
         if(max_interval<j){
                 m.a=l.a;
                 m.b=l.b;
@@ -261,4 +262,9 @@ int main() {
     double a1[4]={1,2,4,6};
     double b1[4]={10,3,5,7};
     largestIntersection(a1,b1,4);
+
+    double a2[3] = {4,20,10};
+    double b2[3] = {8,30,12};
+     largestIntersection(a2, b2, 3);
+    //cout << x;
 }

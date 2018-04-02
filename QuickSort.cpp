@@ -62,6 +62,7 @@ int Partition2(int A[], int p, int r) // p - początek przedziału, r = koniec
         {
             i++;
             swap(A[i], A[j]);
+
         }
     }
     swap(A[r], A[i + 1]);
