@@ -58,13 +58,33 @@ void HeapSort(int A[], int n)
         Heapify(A, j, 0); // czyli naprawia od korzenia do (j - 1) elementu
     }
 }
+void IncreaseKey(int A[], int i, int key, int n){
+    if(key<A[i])
+        cout<<"New key is smaller than the older one"<<endl;
+    A[i]=key;
+    while(i>0 && A[parent(i)]<A[i]){
+        swap(A[parent(i)],A[i]);
+        i=parent(i);
+    }
+}
 
+int HeapDelete(int A[], int i, int &n){
+    IncreaseKey(A,i,INT8_MAX,n);
+    cout<<A[i]<<endl;
+    A[0]=A[n-1];
+    cout<<A[i]<<endl;
+    n--;
+    Heapify(A,n,0);
+}
 int main(){
 
-    const int n = 8;
+    int n = 8;
     int A[n] = { 6, 8, 3, 5, 9, 2, -1, 0 };
     print_t(A,n);
     HeapSort(A, n);
     print_t(A,n);
+    HeapDelete(A,1,n);
+    print_t(A,n);
+
     return 0;
 }

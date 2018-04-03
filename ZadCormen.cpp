@@ -12,8 +12,101 @@ using namespace std;
 //        next element in the sorted list takes only at most O(lg(k)) time, to find the
 //        whole list, you need O(n lg(k)) total steps.
 
-//2.Heap-Delete(A,i) usuwa wartość z węłza i w kopcu A. O(logn) dla n elementowego kopca
+//korzystamy z funkcji merge
+//mergujemy ostatnią listę "j" i pierwszą "i"
+//j--,i++
+//dokonujemy tych operacji dopóki nie zostanie jedna lista
+//mamy n wartości w sumie i k list
+//mergowanie dwóch list gdy n1>n2 czyli max rozmiar z dwóch mergowanych
+// list gdzie ni to rozmiar każdej z list to log(n1);
+//n1+n2+.....ni=n
+//i w końcu wyjdzie złożoność nlogk????? bo mergujemy n elementów i k list czyli log(k)
+///MOJE rozwiązanie
+//bierzemy dwie pierwsze listy, merge na nich i z mergowaną przenosimy na koniec
+//kolejne nie zmergowane i znowu na koniec
+//i tak dopóki nie zostanie nam jedna
 
+
+
+//2.Heap-Delete(A,i) usuwa wartość z węłza i w kopcu A. O(logn) dla n elementowego kopca
+//5. Heap Extract_MIN, insert, increse-key, decrease-key,
+//6.d-kopce, podaj operacje insert ,extract_max
+
+int parent(int i){return ((i-1)/2);}
+int left(int i){return (2*i+1);}
+int right(int i){return (2*i+2);}
+
+void print_t(int A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<A[i]<<" ";
+    }
+    cout<<endl;
+}
+
+void Heapify(int A[],int i,int n){
+    int indmax = i;
+    if(left(i) < n && A[left(i)] > A[indmax])
+        indmax = left(i);
+    if(right(i) < n && A[right(i)] > A[indmax])
+        indmax = right(i);
+    if(i != indmax){
+        swap(A[i],A[indmax]);
+        Heapify(A,indmax,n);
+    }
+
+}
+void BuildHeap(int A[], int n){
+    for(int i=parent(n-1);i>=0;i--)
+        Heapify(A,i,n);
+}
+void IncreaseKey(int A[], int i, int key, int n){
+    if(key<A[i])
+        cout<<"New key is smaller than the old one"<<endl;
+    A[i]=key;
+    while(i>0 && A[parent(i)]<A[i]){
+        swap(A[parent(i)],A[i]);
+        i=parent(i);
+    }
+}
+//to chyba nie działa
+
+void DecreaseKey(int A[], int i, int key, int n){
+    if(key>A[i])
+        cout<<"New key is bigger than the old one"<<endl;
+    A[i]=key;
+    while(i>0 && max(A[left(i)],A[right(i)])>A[i]){
+        swap((int &) max(A[left(i)], A[right(i)]), A[i]);
+        i=max(A[left(i)],A[right(i)]);
+    }
+}
+void HeapDelete(int A[], int i, int &n){
+    IncreaseKey(A,i,INT8_MAX,n);
+    A[0]=A[n-1];
+    n--;
+    Heapify(A,0,n);
+}
+void InsertKey(int A[], int key, int &n){
+    n++;
+    A[n-1]=key;
+    int i=n-1;
+    while(i>0 && A[parent(i)]<A[i]){
+        swap(A[i],A[parent(i)]);
+        i=parent(i);
+    }
+}
+
+void HeapSort(int A[], int n){
+    BuildHeap(A,n);
+    for (int j = n - 1; j >= 1; j--)
+    {
+        swap(A[j], A[0]); // wyrzucamy z kopca pierwszy element i naprawiamy resztę (żeby znowu pierwszy element był największy)
+        Heapify(A, 0, j); // czyli naprawia od korzenia do (j - 1) elementu
+    }
+}
+
+void ExtractMin(int A[],int n){
+
+}
 
 //3.Inwersje
 //Niech A[n] będzie tablicą zawierającą n różnych liczb, Jesli i<j oraz A[i]>A[j] to para (i,j) jest inwersja w A
@@ -90,8 +183,6 @@ int MergeSort(int A[], int p, int r){
 }
 //4. Problem maxymalnej podtablicy 69 strona w Cormenie
 
-//5. Heap Extract_MIN, insert, increse-key, decrease-key,
-//6.d-kopce, podaj operacje insert ,extract_max
 
 //7.Zaprojektuj algorytm, który dla danych n liczb z przedziału od 0 do k, wykonuje wstępne obliczenia a następnie na ich
 //podstawie pozwala w czasie O(1) określić, ile spośród danych n liczb leży w przedziale [a...b]
@@ -138,13 +229,33 @@ void print(int A[],int s){
     cout<<endl;
 }
 int main(){
+    int n = 8;
+    int A[n] = { 6, 8, 3, 5, 9, 2, -1, 0 };
+    cout<<"Przed HeapSortem"<<endl;
+    print_t(A,n);
+    HeapSort(A, n);//nie wiem czemu nie działa jak nalezy
+    cout<<"Po HeapSort"<<endl;
+    print_t(A,n);
+    cout<<"Zamiana wartości"<<endl;
+    IncreaseKey(A,4,55,n);
+    print_t(A,n);
+    cout<<"Usuwanie wartości"<<endl;
+    HeapDelete(A,0,n);
+    print_t(A,n);
+    cout<<"Dodawanie wartości"<<endl;
+    InsertKey(A,-1,n);
+    print_t(A,n);
+    cout<<"Degradowanie wartości"<<endl;
+    DecreaseKey(A,0,-100,n);
+    print_t(A,n);
+
     int arr[] = {1, 20, 6, 4, 5};
     print(arr,5);
     cout<<"MA WYJŚĆ 5 PODOBNO"<<endl;
     cout<<MergeSort(arr,0,4)<<endl;
     print(arr,5);
 
-    int n=10;
+    n=10;
     int G[n]={11,22,212,889,12,45,12,33,689,11};
 
     cout<<"Wersja dla ciągów różniej długości: liczby"<<endl;
