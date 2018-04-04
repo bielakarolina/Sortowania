@@ -78,8 +78,7 @@ void DecreaseKey(int A[], int i, int key, int n){
     if(key>A[i])
         cout<<"New key is bigger than the old one"<<endl;
     A[i]=key;
-    int p;
-        Heapify(A,i,n);
+    Heapify(A,i,n);
 
 }
 void HeapDelete(int A[], int i, int &n){

@@ -12,42 +12,73 @@ using namespace std;
 //Proszę zaimplementować funkcję SumSort tak, by działała możliwie jak najszybciej.
 //Proszę oszacować i podać jej złożoność czasową.
 //
-//struct sum{
-//    int x;
-//    int val;
-//};
-//void SumSort(int A[], int B[], int n) {
-//    sum * sums = new sum[n];
-//    for (int i = 0; i < n; i++) {
-//        sums[i].x = i*n;
-//        sums[i].val = 0;
-//        for (int j = 0; j < n; j++) sums[i].val += A[i*n + j];
-//    }
-//    print2(sums, n);
-//
-//    sum * sumsS = new sum[n];
-//    int max, min;
-//    max = min = sums[0].val;
-//    for (int i = 0; i < n; i++) {
-//        if (sums[i].val > max) max = sums[i].val;
-//        if (sums[i].val < min) min = sums[i].val;
-//    }
-//
-//    int k = (max - min) + 1;
-//    int * C = new int[k];
-//    for (int i = 0; i < k; i++) C[i] = 0;
-//    for (int i = 0; i < n; i++) C[sums[i].val - min]++;
-//    for (int i = 0; i < k - 1; i++) C[i + 1] += C[i];
-//    for (int i = 0; i < n; i++) sumsS[--C[sums[i].val - min]] = sums[i];
-//    for (int i = 0; i < n; i++) {
-//        int b = sumsS[i].x;
-//        for (int j = 0; j < n; j++) B[i*n + j] = A[j+b];
-//    }
-//
-//    delete[] sums;
-//    delete[] sumsS;
-//    delete[] C;
-//}
+struct sum{
+    int x; //długość przedziału
+    int val; //wartość sumy
+};
+void print(int A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<A[i]<<" ";
+    }
+    cout<<endl;
+}
+void print_s(sum A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<A[i].val<<" ";
+    }
+    cout<<endl;
+}
+void CountingSort_N(sum *A, int n, int exp){
+
+    int k=10;
+    int C[k];
+    sum* B =new sum[n];
+    for(int i=0;i<k;i++) C[i]=0;
+    for(int i=0;i<n;i++) C[(A[i].val / exp) % 10]++;
+    for(int i=1;i<k;i++) C[i]+=C[i-1];
+    for(int i=n-1;i>=0;i--){
+        B[C[(A[i].val / exp) % 10]-1]=A[i];
+        C[(A[i].val / exp) % 10]--;
+    }
+    for(int i=0;i<n;i++) A[i]=B[i];
+
+}
+void RadixSort_N(sum A[], int n, int k){
+    for(int i=1;k/i>0;i=i*10){
+        CountingSort_N(A,n,i);
+   // print_s(A,n);
+
+    }
+
+
+}
+void SumSort(int A[], int B[], int n) {
+    sum* sums =new sum[n];
+    for(int i = 0; i<n ;i++){
+        sums[i].x = i*n;
+        sums[i].val=0;
+        for(int j=0;j<n;j++)
+            sums[j].val+=A[i*n+j];
+    }
+    print_s(sums,n);
+    int max_sum=0;
+    for(int i=0 ;i<n ;i++){
+        if(sums[i].val>max_sum)
+            max_sum=sums[i].val;
+    }
+    cout<<max_sum<<endl;
+
+    RadixSort_N(sums,n,max_sum);
+
+    for (int i = 0; i < n; i++) {
+        int b = sums[i].x;
+        for (int j = 0; j < n; j++) {
+            B[i * n + j] = A[j + b];
+        }
+    }
+
+}
+
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
 //2. Dana jest n elementowa tablica A zawierająca liczby naturalne (potencjalnie bardzo duże).
@@ -84,6 +115,8 @@ struct Node {
     Node * next;
     int value;
 };
+
+
 void print_l(Node* l){
     while(l){
         cout << l->value << " ";
@@ -150,7 +183,24 @@ Node* fixSortedList( Node* L ){
     cout<<"WYNIK"<<endl;
     return mergeTwoLists(L,first);
 }
+
+void r(int A[], int n) {
+    for (int i = 0; i < n; i++)
+        A[i] = rand() % 100;
+}
+
 int main(){
+
+    srand(time(NULL));
+    const int n = 3;
+    int A[n*n], B[n*n];
+    r(A, n*n);
+
+    print(A, n*n);
+    SumSort(A, B, n);
+
+    print(B, n*n);
+
 
     Node *list1=NULL;
 
