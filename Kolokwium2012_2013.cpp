@@ -14,7 +14,93 @@ using namespace std;
 //struct Node { Node* next; int val; }; Node* QuickerSort ( Node* head )
 //Argumentem funkcji jest wskaźnik na głowę listy do posortowania a wynikiem powinien być wskaźnik na głowę
 //listy posortowanej. Sortowanie powinno polegać na porównywaniu wartości val list oraz przepinaniu wskaźników next.
+struct Node {
+    Node* next;
+    int val;
+};
+void addNode(Node* h, int val){
+    Node* tmp = new Node;
+    tmp->next = h->next;
+    tmp->val = val;
+    h->next = tmp;
+}
 
+//Dla listy z straznikiem
+Node* buildList(int i, int range){
+    Node* head = new Node;
+    head->next = NULL;
+    srand(time(NULL));
+    for(i; i >= 0; i--){
+        addNode(head, rand()%range);
+    }
+    return head;
+}
+
+void print(Node* head){
+    while(head->next != NULL){
+        printf("%d ", head->next->val);
+        head = head->next;
+    }
+    cout<<endl;
+}
+
+Node* QuickerSort ( Node* head ){
+    if(head==NULL) return head;
+    Node * lesser,* equal,* greater, *l,*e,*g, *ret, *retTail;
+    lesser=new Node;
+    equal=new Node;
+    greater=new Node;
+    lesser->next=NULL;
+    equal->next=NULL;
+    greater->next = NULL;
+    l=lesser;
+    e=equal;
+    g=greater;
+    int c=head->val;
+    while(head != NULL){
+        if(head->val == c){
+            e->next = head;
+            head = head->next;
+            e = e->next;
+            e->next = NULL;
+        }
+        else{
+            if(head->val < c){
+                l->next = head;
+                head = head->next;
+                l = l->next;
+                l->next = NULL;
+            }
+            else{
+                g->next = head;
+                head = head->next;
+                g = g->next;
+                g->next = NULL;
+            }
+        }
+    }
+
+    lesser->next =QuickerSort(lesser->next);
+    greater->next = QuickerSort(greater->next);
+    ret = new Node;
+    ret->next = NULL;
+    retTail = ret;
+
+    ret->next = lesser->next;
+    while(retTail->next != NULL){
+        retTail = retTail->next;
+    }
+
+    retTail->next = equal->next;
+    while(retTail->next != NULL){
+        retTail = retTail->next;
+    }
+
+    retTail->next = greater->next;
+
+    retTail = ret->next;
+    return retTail;
+}
 
 
 //2. Proszę zaprojektowac strukturę danych przechowującą liczby i pozwalającą na następujące operacje
@@ -62,6 +148,12 @@ bool possible( char* u, char* v, char* w ){
 //zlozonosc powyzszego programu to n+wielkosc kazdej z tablic slowa, czyli O(n+u+v+w) gdzie n jest zakresem liter
 int main(){
     //har * ponk="ponk";
+    Node* head = buildList(6, 5);
+    print(head);
+    head->next = QuickerSort(head->next);
+    print(head);
+
+
     char *ponk = new char[4];
     strcpy(ponk, "ponk");
     //char * kwat="kwat";

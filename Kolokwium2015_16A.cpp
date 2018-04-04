@@ -191,6 +191,7 @@ void r(int A[], int n) {
 
 int main(){
 
+
     srand(time(NULL));
     const int n = 3;
     int A[n*n], B[n*n];

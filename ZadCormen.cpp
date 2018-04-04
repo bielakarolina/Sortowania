@@ -219,7 +219,7 @@ void CountingSort(int A[],int n,int exp){
         A[i]=B[i];
 }
 void RadixSort(int A[],int n){
-    for(int i=1;i<1000;i*=10)
+    for(int i=1;i<n*n*n;i*=n)
         CountingSort(A,n,i);
 }
 //że niby logn(n^3)=3 i dlatego wywołujemy tak ale tego nie czaje
@@ -232,26 +232,26 @@ void print(int A[],int s){
 }
 int main(){
     int n = 8;
-    int A[n] = { 6, 8, 3, 5, 9, 2, -1, 0 };
-    cout<<"Przed HeapSortem"<<endl;
-    print_t(A,n);
-    HeapSort(A, n);//nie wiem czemu nie działa jak nalezy
-    cout<<"Po HeapSort"<<endl;
-    print_t(A,n);
-    cout<<"Zamiana wartości"<<endl;
-    IncreaseKey(A,4,7,n);
-    print_t(A,n);
-//    cout<<"Usuwanie wartości"<<endl;
-//    HeapDelete(A,0,n);
+//    int A[n] = { 6, 8, 3, 5, 9, 2, -1, 0 };
+//    cout<<"Przed HeapSortem"<<endl;
 //    print_t(A,n);
-//    cout<<"Dodawanie wartości"<<endl;
-//    InsertKey(A,-1,n);
-    BuildHeap(A,n);
-    print_t(A,n);
-
-    cout<<"Degradowanie wartości"<<endl;
-    DecreaseKey(A,0,-2,n);
-    print_t(A,n);
+//    HeapSort(A, n);//nie wiem czemu nie działa jak nalezy
+//    cout<<"Po HeapSort"<<endl;
+//    print_t(A,n);
+//    cout<<"Zamiana wartości"<<endl;
+//    IncreaseKey(A,4,7,n);
+//    print_t(A,n);
+////    cout<<"Usuwanie wartości"<<endl;
+////    HeapDelete(A,0,n);
+////    print_t(A,n);
+////    cout<<"Dodawanie wartości"<<endl;
+////    InsertKey(A,-1,n);
+//    BuildHeap(A,n);
+//    print_t(A,n);
+//
+//    cout<<"Degradowanie wartości"<<endl;
+//    DecreaseKey(A,0,-2,n);
+//    print_t(A,n);
 
 //    int arr[] = {1, 20, 6, 4, 5};
 //    print(arr,5);
@@ -259,13 +259,13 @@ int main(){
 //    cout<<MergeSort(arr,0,4)<<endl;
 //    print(arr,5);
 //
-//    n=10;
-//    int G[n]={11,22,212,889,12,45,12,33,689,11};
-//
-//    cout<<"Wersja dla ciągów różniej długości: liczby"<<endl;
-//    print(G,n);
-//    RadixSort(G,n);
-//    print(G,n);
+    n=100;
+    int G[n]={9999,22,99,889,1999,45,12,999,689,9};
+    for(int i=10;i<n;i++) G[i]=0;
+    cout<<"Wersja dla ciągów różniej długości: liczby"<<endl;
+    print(G,n);
+    RadixSort(G,n);
+    print(G,n);
 //    DoyouwantmeBABE(G,n,1000,0,999);
 }
 //7,1-4

@@ -59,7 +59,7 @@ void MergeSort_it(int A[], int n)
     int i;
     for (i = 1; i < n ; i *= 2) // i - długość przedziału aktualnie sortowanego
     {
-        for(l=0;l<n-1;l+=2*i){
+        for(l=0;l<n-1;l+=i){
             int q=l+i-1;
             int p=min(l+2*i-1,n-1);
             Merge(A,l,q,p);
