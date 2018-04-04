@@ -3,5 +3,5 @@ project(Sortowania)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES D-Heap.cpp)
+set(SOURCE_FILES ZadCormen.cpp)
 add_executable(Sortowania ${SOURCE_FILES})

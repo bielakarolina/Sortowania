@@ -69,15 +69,18 @@ void IncreaseKey(int A[], int i, int key, int n){
     }
 }
 //to chyba nie działa
+int max_r(int a, int b){
+    if(a>b) return a;
+    else return b;
+}
 
 void DecreaseKey(int A[], int i, int key, int n){
     if(key>A[i])
         cout<<"New key is bigger than the old one"<<endl;
     A[i]=key;
-    while(i>0 && max(A[left(i)],A[right(i)])>A[i]){
-        swap((int &) max(A[left(i)], A[right(i)]), A[i]);
-        i=max(A[left(i)],A[right(i)]);
-    }
+    int p;
+        Heapify(A,i,n);
+
 }
 void HeapDelete(int A[], int i, int &n){
     IncreaseKey(A,i,INT8_MAX,n);
@@ -237,31 +240,33 @@ int main(){
     cout<<"Po HeapSort"<<endl;
     print_t(A,n);
     cout<<"Zamiana wartości"<<endl;
-    IncreaseKey(A,4,55,n);
+    IncreaseKey(A,4,7,n);
     print_t(A,n);
-    cout<<"Usuwanie wartości"<<endl;
-    HeapDelete(A,0,n);
+//    cout<<"Usuwanie wartości"<<endl;
+//    HeapDelete(A,0,n);
+//    print_t(A,n);
+//    cout<<"Dodawanie wartości"<<endl;
+//    InsertKey(A,-1,n);
+    BuildHeap(A,n);
     print_t(A,n);
-    cout<<"Dodawanie wartości"<<endl;
-    InsertKey(A,-1,n);
-    print_t(A,n);
+
     cout<<"Degradowanie wartości"<<endl;
-    DecreaseKey(A,0,-100,n);
+    DecreaseKey(A,0,-2,n);
     print_t(A,n);
 
-    int arr[] = {1, 20, 6, 4, 5};
-    print(arr,5);
-    cout<<"MA WYJŚĆ 5 PODOBNO"<<endl;
-    cout<<MergeSort(arr,0,4)<<endl;
-    print(arr,5);
-
-    n=10;
-    int G[n]={11,22,212,889,12,45,12,33,689,11};
-
-    cout<<"Wersja dla ciągów różniej długości: liczby"<<endl;
-    print(G,n);
-    RadixSort(G,n);
-    print(G,n);
-    DoyouwantmeBABE(G,n,1000,0,999);
+//    int arr[] = {1, 20, 6, 4, 5};
+//    print(arr,5);
+//    cout<<"MA WYJŚĆ 5 PODOBNO"<<endl;
+//    cout<<MergeSort(arr,0,4)<<endl;
+//    print(arr,5);
+//
+//    n=10;
+//    int G[n]={11,22,212,889,12,45,12,33,689,11};
+//
+//    cout<<"Wersja dla ciągów różniej długości: liczby"<<endl;
+//    print(G,n);
+//    RadixSort(G,n);
+//    print(G,n);
+//    DoyouwantmeBABE(G,n,1000,0,999);
 }
 //7,1-4
