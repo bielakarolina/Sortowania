@@ -8,3 +8,6 @@ tablicę A o k pozycji.
 (Przesunięcie tablicy oznacza, że element, który był pierwotnie na
 pozycji i, powinien się znaleźć na pozycję
 n + k (modulo n). Algorytm powinien działać w miejscu.
+
+kompiluje to w oczach i mi wychodzą errory
+jak kompiluje w głowie to w oczach mam erorry

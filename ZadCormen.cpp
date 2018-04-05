@@ -196,7 +196,7 @@ void DoyouwantmeBABE(int A[],int n,int k,int a,int b){
     for(int i=0;i<k;i++) C[i]=0;
     for(int i=0;i<n;i++) C[A[i]]++;
     for(int i=1;i<k;i++) C[i]+=C[i-1];
-    cout<<C[b]-C[a]<<endl;
+    cout<<C[b]-C[a-1]<<endl;
 
 }
 //8. Skonsturłuj algo, który pozwala posortować n liczb całkowitych z przedziału 0 do n^3-1 w czasie O(n)

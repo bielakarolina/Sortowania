@@ -16,6 +16,13 @@ struct Node{
     double value;
     Node * next;
 };
+
+void print(int A[],int s){
+    for(int i=0;i<s;i++){
+        cout<<A[i]<<" ";
+    }
+    cout<<endl;
+}
 void insertionSort(Node *&first) {
 
     if (first == NULL || first->next == NULL) return;
@@ -151,6 +158,7 @@ int SumBetween(int T[], int from, int to, int n){
     cout<<p<<endl;
     int k = select(T,0,n-1,to);
     cout<<p<<" "<< k<<endl;
+    print(T,n);
     int sum = 0;
     for(int i=p; i<=k ;i++)
         sum += T[i];
@@ -178,7 +186,7 @@ int main(){
      cout<<"Suma pomiędzy kolejnymi wartosciami w tablicy"<<endl;
     int T1[10]={10, 7, 6, 15,7,0,20,50,1,2};
     //cout<<select(T1,0,3,1);
-    cout<<SumBetween(T1,3,4,10);
+    cout<<SumBetween(T1,3,8,10);
     return 0;
 }
 

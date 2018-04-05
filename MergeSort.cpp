@@ -84,7 +84,9 @@ void print_l(Node* l){
 }
 Node *mergeTwoLists(Node* &l1, Node* &l2) {
     Node *head = new Node;
-    Node *p = head;
+    Node *p =new Node;
+    p->next=NULL;
+    head=p;
 
     Node *p1=l1;
     Node *p2=l2;
@@ -107,7 +109,7 @@ Node *mergeTwoLists(Node* &l1, Node* &l2) {
         p->next = p2;
     }
 
-    return head; //head->next , przetestuj później
+    return head->next; //head->next , przetestuj później
 
 }
 
@@ -234,15 +236,15 @@ int main(){
         add(list3, i+1);
         add(list4, (i+1)*2);
     }
-    print_l(list3);
-    print_l(list4);
-    cout<<mergeTwoLists2(list,list3,list4)->value<<endl;
-    cout<<list->value<<endl;
-    print_l(list3);
+//    print_l(list3);
+//    print_l(list4);
+//    cout<<mergeTwoLists2(list,list3,list4)->value<<endl;
+//    cout<<list->value<<endl;
+//    print_l(list3);
     Node *list5=new Node();
     srand(time(0));
     for(int i=0;i<10;i++)
-        add(list5,rand()% 10 + 10 );
+        add(list5,rand()% 100 + 10 );
     print_l(list5);
     MergeSort_list(list5);
     print_l(list5);
